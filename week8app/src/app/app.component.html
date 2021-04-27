@@ -1,0 +1,121 @@
+<h1>FIT2095 App Week 8</h1>
+
+
+  <div class="form-group col-md-6">
+    <label for="maker">Maker</label>
+    <input type="text" class="form-control" [(ngModel)]="maker">
+  </div>
+
+  <div class="form-group col-md-6">
+    <label for="model">Model</label>
+    <input type="text" class="form-control" [(ngModel)]="model">
+  </div>
+ 
+  <div class="form-group col-md-6">
+    <label for="inputAddress">Body Type</label>
+    <select [(ngModel)]="body_type" type="text" class="form-control">
+      <option selected value = "Bus">Bus</option>
+      <option value = "Coupe">Coupe</option>
+      <option value = "Hatch">Hatch</option>
+      <option value = "Sedan">Sedan</option>
+      <option value = "SUV">SUV</option>
+      <option value = "Van">Van</option>
+      <option value = "Ute">Ute</option>
+    </select>
+  </div>
+
+  <div class="form-group col-md-6">
+    <label for="year">Year</label>
+    <input type="number" class="form-control" [(ngModel)]="year">
+  </div>
+
+
+  <div class="form-row w8form">
+    <div class="form-group col-md-6">
+      <label for="address">Address</label>
+      <input type="text" class="form-control" [(ngModel)]="address">
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="inputState">State</label>
+      <select type="text" class="form-control" [(ngModel)]="state"> 
+        <option selected value = "ACT">ACT</option>
+        <option value = "NSW">NSW</option>
+        <option value = "NT">NT</option>
+        <option value = "QLD">QLD</option>
+        <option value = "SA">SA</option>
+        <option value = "TAS">TAS</option>
+        <option value = "WA">WA</option>
+        <option value = "VIC">VIC</option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-2">
+      <label for="postcode">Post Code</label>
+      <input type="text" class="form-control" [(ngModel)]="post_code">
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-primary" (click) = "addCar()">
+    ADD CAR <span class="badge badge-light">{{calculateNumItems()}}</span>
+  </button> 
+
+  <button type="button" class="btn btn-danger" (click) = "deleteOldCars()" [disabled]="calculateNumOldCars() === 0">
+    DELETE OLD CARS <span class="badge badge-light">{{calculateNumOldCars()}}</span>
+  </button> <br><br>
+
+ 
+  
+  <h1>All Cars</h1>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Maker</th>
+        <th scope="col">Model</th>
+        <th scope="col">Year</th>
+        <th scope="col">Body Type</th>
+        <th scope="col">Address</th>
+        <th scope="col">Delete ?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor = "let item of db; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{item.maker}}</td>
+        <td>{{item.model}}</td>
+        <td>{{item.year}}</td>
+        <td>{{item.body_type}}</td>
+        <td>{{item.address + ', ' + item.state + ', ' + item.post_code}}</td>
+        <td> <button class='btn btn-warning' (click)="deleteCarById(item)">X</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  <h1>Old Cars</h1>
+  <table class="table" *ngIf = "calculateNumOldCars() > 0">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Maker</th>
+        <th scope="col">Model</th>
+        <th scope="col">Year</th>
+        <th scope="col">Body Type</th>
+        <th scope="col">Address</th>
+        <th scope="col">Delete ?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor = "let item of db; let i = index" >
+        <td *ngIf="item.year<2000">{{i+1}}</td>
+        <td *ngIf="item.year<2000">{{item.maker}}</td>
+        <td *ngIf="item.year<2000">{{item.model}}</td>
+        <td *ngIf="item.year<2000">{{item.year}}</td>
+        <td *ngIf="item.year<2000">{{item.body_type}}</td>
+        <td *ngIf="item.year<2000">{{item.address + ', ' + item.state + ', ' + item.post_code}}</td>
+        <td *ngIf="item.year<2000"> <button class='btn btn-warning' (click)="deleteCarById(item)">X</button></td>
+      </tr>
+    </tbody>
+  </table>
